@@ -1,6 +1,6 @@
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
-import ToDoList from './components/ToDoList';
+import ToDoListContainer from './ToDoListContainer';
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -60,7 +60,7 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <ToDoList />
+      <ToDoListContainer />
     </>
   );
 }
