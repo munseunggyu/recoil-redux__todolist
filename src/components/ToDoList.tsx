@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import {FaTrash} from 'react-icons/fa'
-import { useState } from "react";
 const ListContainer = styled.div`
   margin-top:32px;
   margin-left:32px;

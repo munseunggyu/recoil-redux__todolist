@@ -8,6 +8,7 @@ const ToDoContainer = styled.div`
   height:800px;
   background-color:white;
   border-radius:20px;
+  position:relative;
 `;
 
 
