@@ -1,6 +1,7 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import styled from "styled-components";
 import {AiOutlinePlus} from 'react-icons/ai'
+import { useState } from "react";
 
 const InputContainer = styled.div`
 background: #f8f9fa;
@@ -34,17 +35,29 @@ const ToggleBtn = styled(motion.button)`
   border-radius:50%;
   width:75px;
   height:75px;
-`
+`;
+
 
 function CreateToDo(){
+  const [toggle,setToggle] = useState(false);
+  console.log(toggle)
   return(
     <>
+    {
+      toggle &&
     <InputContainer>
       <Input placeholder="할 일을 입력후, Enter 를 누르세요." />
     </InputContainer>
-    <ToggleBtn >
-      <AiOutlinePlus size='50' color='white' />
-    </ToggleBtn>
+    }
+      <ToggleBtn
+       onClick={() => setToggle(!toggle)} 
+       animate={{
+        rotate: toggle ? 45 : 0,
+        background: toggle ? "#ff6b6b" : "#38d9a9"
+      }}
+       >
+        <AiOutlinePlus size='50' color='white' />
+      </ToggleBtn>
     </>
   )
 }
