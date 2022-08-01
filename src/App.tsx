@@ -1,5 +1,6 @@
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
+import ToDoList from './components/ToDoList';
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -29,7 +30,11 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
-  background-color: #3f8cf2;
+  background-color: RGB(233, 236, 239);
+  display: flex;
+  justify-content:center;
+  align-items:center;
+  height:130vh;
 }
 ol, ul {
 	list-style: none;
@@ -55,7 +60,7 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      
+      <ToDoList />
     </>
   );
 }
