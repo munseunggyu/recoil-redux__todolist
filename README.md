@@ -1,1 +1,3 @@
-## Recoil and Redux Leaning
+# Recoil and Redux Learning
+
+## Redux Version
