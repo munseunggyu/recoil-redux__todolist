@@ -1,9 +1,11 @@
-import { AnimatePresence, motion } from "framer-motion";
+import {  motion } from "framer-motion";
 import styled from "styled-components";
 import {AiOutlinePlus} from 'react-icons/ai'
-import { useState } from "react";
+import React, { useState } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { inputState, IToDos, toDoState } from "../atom";
 
-const InputContainer = styled.div`
+const Form = styled.form`
 background: #f8f9fa;
   width:100%;
   padding-top: 32px;
@@ -40,14 +42,34 @@ const ToggleBtn = styled(motion.button)`
 
 function CreateToDo(){
   const [toggle,setToggle] = useState(false);
-  console.log(toggle)
+  const [todos,setTodos] = useRecoilState<IToDos[]>(toDoState)
+  const [value,setValue] = useRecoilState<string>(inputState)
+  const change = (e:React.FormEvent<HTMLInputElement>) => {
+    setValue(e.currentTarget.value)
+  }
+  const onSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if(value.length === 0) return
+    setTodos(prev =>  {
+      return [
+        ...prev,{
+        id:Date.now(),
+        text:value,
+        isCompleted:false,}
+      ]
+    })    
+    setValue('')
+  }
   return(
     <>
     {
       toggle &&
-    <InputContainer>
-      <Input placeholder="할 일을 입력후, Enter 를 누르세요." />
-    </InputContainer>
+    <Form onSubmit={onSubmit}>
+      <Input placeholder="할 일을 입력후, Enter 를 누르세요."
+        onChange={change}
+        value={value}
+      />
+    </Form>
     }
       <ToggleBtn
        onClick={() => setToggle(!toggle)} 

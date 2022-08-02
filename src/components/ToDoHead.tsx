@@ -1,4 +1,7 @@
+import { useEffect } from "react";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { toDoState } from "../atom";
 import {  NowDate } from "./Date";
 
 const HeadContainer = styled.div`
@@ -27,6 +30,15 @@ const TasksLeft = styled.div`
 
 function ToDoHead(){
   const {year,month,date,day} = NowDate()
+  const toDos = useRecoilValue(toDoState);
+  let count = 0 ;
+    toDos.forEach(v => {
+      if(toDos.length === 0) return;
+      if(v.isCompleted === false){
+        count++
+      }
+    })
+  
   return(
     <HeadContainer>
       <Date >
@@ -36,7 +48,7 @@ function ToDoHead(){
         {day}
       </Day>
       <TasksLeft>
-        할일 남음
+        할일 {count}남음
       </TasksLeft>
     </HeadContainer>
   )
