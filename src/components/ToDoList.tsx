@@ -15,18 +15,18 @@ const ListFlex = styled(motion.div)`
   position:relative;
   margin-bottom:20px;
 `;
-const CircleBtn = styled(motion.button)<{iscompleted:boolean}>`
+const CircleBtn = styled(motion.button)<Iiscompleted>`
   outline:none;
   border-radius:50%;
   width:35px;
   height:35px;
-  border:${props => props.iscompleted===true ? '1px solid RGB(56, 217, 169)' : '1px solid RGB(228, 231, 234)'};
+  border:${props => props.iscompleted===  1 ? '1px solid RGB(56, 217, 169)' : '1px solid RGB(228, 231, 234)'};
   background-color:white;
   margin-right:25px;
 `;
-const ListText = styled.p<{iscompleted:boolean}>`
+const ListText = styled.p<Iiscompleted>`
   font-size:23px;
-  opacity: ${props => props.iscompleted===true ? 0.2 : 0.6};
+  color: ${props => props.iscompleted=== 1 ? 'rgba(0,0,0,0.2)': 'rgba(0,0,0,0.6)'};
 
 `;
 const Trash = styled(motion.div)`
@@ -34,6 +34,9 @@ const Trash = styled(motion.div)`
   right:32px;
   color:rgba(0,0,0,0.3);
 `;
+interface Iiscompleted {
+  iscompleted:number
+}
 
 function ToDoList(){
   const [todos,setTodos] = useRecoilState<IToDos[]>(toDoState)
@@ -42,14 +45,14 @@ function ToDoList(){
   }
   const isDone = (id:number) => {
     setTodos(prev => {
-      const copyPrev = prev.slice()
+      const copyPrev = [...prev]
       const findIndex = copyPrev.findIndex(todo => todo.id === id)
+      const isCompleted = copyPrev[findIndex].isCompleted
       return [
         ...copyPrev.slice(0,findIndex),
         {
-          id,
-          text:copyPrev[findIndex].text,
-          isCompleted:!copyPrev[findIndex].isCompleted
+          ...copyPrev[findIndex],
+          isCompleted:!isCompleted
         },
         ...copyPrev.slice(findIndex+1)
       ]
@@ -63,19 +66,20 @@ function ToDoList(){
         onClick={() => isDone(item.id)}
         >
           <CircleBtn 
-          iscompleted={item.isCompleted}
+          iscompleted={item.isCompleted ? 1 : 0}
           >
            { item.isCompleted &&
              <AiOutlineCheck size='20' color='RGB(56, 217, 169)' />
            }
           </CircleBtn>
-          <ListText iscompleted={item.isCompleted}>
+          <ListText 
+          iscompleted={item.isCompleted ? 1 : 0}>
             {item.text}
           </ListText>
           <Trash 
           onClick={() => del(item.id)}
           whileHover={{
-            color:'red'
+            color:'#e41f1fee'
           }}
           >
             <FaTrash size='20' />
